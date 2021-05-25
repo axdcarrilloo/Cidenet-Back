@@ -14,10 +14,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = Route.BASE + Route.CARRO, produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "${cors.front.url}" , methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class CarroController {
 
     @Autowired
     private CarroService carroService;
+
+    @GetMapping(value = Route.CONSULTAR_PLACAMARCA)
+    public ResponseEntity<List<Carro>> consultarplacaOMarca(@PathVariable String contrains){
+        return new ResponseEntity<List<Carro>>(carroService.consultarPorPlacaMarca(contrains), HttpStatus.OK);
+    }
 
     @DeleteMapping(value = Route.ELIMINAR)
     public ResponseEntity<Long> eliminarCarro(@PathVariable Long id){

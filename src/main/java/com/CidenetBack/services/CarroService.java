@@ -22,6 +22,10 @@ public class CarroService {
     @Autowired
     private ConductorService conductorService;
 
+    public List<Carro> consultarPorPlacaMarca(String contrains){
+        return carroRepository.getByPlacaOrMarca(contrains);
+    }
+
     public Long eliminarCarro(Long id){
         Long resultado = Constantes.PROCESO_EXITOSO;
         carroRepository.deleteById(id);
@@ -48,7 +52,7 @@ public class CarroService {
     }
 
     public Long registrarCarro(CarroRegistroDto carroRegistroDto){
-        Long resultado = 0L;
+        Long resultado = Constantes.PROCESO_EXITOSO;
         if(Objects.isNull(consultarPorPlaca(carroRegistroDto.getPlaca()))){
             if(Objects.nonNull(conductorService.consultarPorId(carroRegistroDto.getConductor().getId()))){
                 log.info("CarroService.Java - registrarCarro() -> Registrando carro");
